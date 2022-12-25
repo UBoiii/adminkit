@@ -6,6 +6,24 @@
   background: $sidebar-bg;
 }
 
+.sidebar-profile-wrapper {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 0px;
+}
+
+.sidebar-profilepic {
+  border-radius: 50%;
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+.sidebar-username {
+  font-size: 1.2em;
+}
+
 .sidebar-content {
   transition: $sidebar-transition;
   display: flex;
