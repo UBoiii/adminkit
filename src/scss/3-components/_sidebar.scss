@@ -22,6 +22,29 @@
 
 .sidebar-username {
   font-size: 1.2em;
+  text-align: center;
+}
+
+.sidebar-sticky-footer {
+  position: fixed !important;
+  bottom: 0;
+  width: $sidebar-width;
+  border: 0 !important;
+}
+
+.sidebar-logout {
+  margin-right: $sidebar-logout-hmargin !important;
+  margin-left: $sidebar-logout-hmargin !important;
+  margin-top: $sidebar-logout-vmargin !important;
+  margin-bottom: $sidebar-logout-vmargin !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  background-color: $red !important;
+  color: #FFF !important;
+}
+
+.svg-logout {
+  color: #FFF !important;
 }
 
 .sidebar-content {
