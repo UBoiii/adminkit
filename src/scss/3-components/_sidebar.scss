@@ -12,6 +12,7 @@
   align-items: center;
   flex-direction: column;
   margin-bottom: 0px;
+  margin-top: 15px !important;
 }
 
 .sidebar-profilepic {
@@ -28,6 +29,7 @@
 .sidebar-sticky-bottom {
   position: fixed !important;
   bottom: 0 !important;
+  background-color: $sidebar-bg;
 }
 
 .sidebar-footer-wrapper {
