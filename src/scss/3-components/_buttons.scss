@@ -23,3 +23,22 @@
   @include button-color($gray-800);
   @include button-color-hover($gray-800);
 }
+
+.ghost-button {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+}
+
+.add-button {
+  margin-bottom: 10px;
+}
+
+.add-button-logo {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.add-button-txt {
+  font-size: 1.2em;
+}
