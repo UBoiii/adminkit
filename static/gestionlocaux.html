@@ -51,16 +51,11 @@
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-up.html">
-							<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Dummy Text</span>
+						<a class="sidebar-link" href="gestionetudes.html">
+							<i class="align-middle" data-feather="book"></i> <span class="align-middle">Gestion D&apos;&eacute;tudes</span>
 						</a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-blank.html">
-							<i class="align-middle" data-feather="book"></i> <span class="align-middle">Dummy Text</span>
-						</a>
-					</li>
 					<div class="sidebar-sticky-bottom">
 						<li class="sidebar-sticky-profile sidebar-item">
 							<a class="sidebar-profile sidebar-sticky-element sidebar-link" href="pages-blank.html">
@@ -172,7 +167,7 @@
 										<div class="input-row-wrapper">
 											<div class="simple-txt-input-wrapper w-50 mb-0" style="display: flex;">
 												<select name="batname" id="slctbatname" class="w-100 my-drop-down" required>
-													<option value="" disabled selected hidden>Choisir le b&acirc;timent</option>
+													<option value="" disabled selected>Choisir le b&acirc;timent</option>
 													<option value="A">B&acirc;timent A</option>
 													<option value="B">B&acirc;timent B</option>
 													<option value="C">B&acirc;timent C</option>
@@ -180,17 +175,23 @@
 													<option value="N">B&acirc;timent N</option>
 												</select>
 											</div>
-											<input type="text" style="margin-left: 5px;" class="simple-txt-input w-50 form-control" id="numSalle" placeholder="Numero de la salle" required>
+											<div class="form-floating mb-3 w-50">
+												<input type="number" style="margin-left: 5px; height: 55px;" class="simple-txt-input w-100 form-control" id="numSalle" placeholder="Num&eacute;ro de la salle" required>
+												<label for="numSalle">Num&eacute;ro de la salle</label>
+											</div>
 										</div>
 										<div class="input-row-wrapper">
 											<div class="simple-txt-input-wrapper w-50 mb-0" style="display: flex;">
 												<select name="SalleType" id="slctSalleType" class="w-100 my-drop-down" required>
-													<option value="" disabled selected hidden>Choisir le type de la salle</option>
+													<option value="" disabled selected>Choisir le type de la salle</option>
 													<option value="Clss">Classe</option>
 													<option value="Amphi">Amphith&eacute;&acirc;tre</option>
 												</select>
 											</div>
-											<input type="number" style="margin-left: 5px;" class="simple-txt-input w-50 form-control" id="capacitesalle" placeholder="Capacit&eacute; totale de la salle" required>
+											<div class="form-floating mb-3 w-50">
+												<input type="number" style="margin-left: 5px; height: 55px;" class="simple-txt-input w-100 form-control" id="capacitesalle" placeholder="Capacit&eacute; totale de la salle" required>
+												<label for="capacitesalle">Capacit&eacute; totale de la salle</label>
+											</div>
 										</div>
 										<button class="big-form-submit-button w-100 btn btn-success" type="submit" name="addttchr" value="confirm">Ajouter</button>
 									</form>

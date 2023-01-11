@@ -43,7 +43,7 @@
 }
 
 .lbl-txt-field {
-  font-size: 1.2em;
+  font-size: 1.3em;
   margin-bottom: 10px;
 }
 
@@ -58,7 +58,7 @@
 
 .simple-txt-input {
   display: block;
-  height: 50px;
+  height: 55px;
   font-size: 1.3em;
 }
 
@@ -78,8 +78,8 @@
 
 .form-submit-button {
   margin-left: 10px;
-  height: 50px;
-  font-size: 1.2em;
+  height: 55px;
+  font-size: 1.3em;
 }
 
 table.bats-table td:nth-child(1),
@@ -107,7 +107,7 @@ table.bats-table td:nth-child(4)
 }
 
 .my-drop-down {
-  height: 50px;
+  height: 55px;
   margin-right: 5px;
   font-size: 1.3em;
   padding-left: 10px;
@@ -117,12 +117,18 @@ table.bats-table td:nth-child(4)
 {
   margin-right: 0;
   margin-left: 0;
-  height: 50px;
-  font-size: 1.2em;
+  height: 55px;
+  font-size: 1.3em;
 }
 
 .input-row-wrapper {
   display: flex;
   margin-bottom: 5px;
   margin-top: 5px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
