@@ -152,11 +152,11 @@
 
 			<main class="content">
 				<div class="container-fluid p-0">
-					<form action="#" method="POST"> <!--WIP PHP PHP PHP-->
-						<div class="row">
-							<div class="col-12">
-								<div class="card">
-									<div class="card-body">
+					<div class="row">
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+									<form action="#" method="POST"> <!--WIP PHP PHP PHP-->
 										<div class="lbl-txt-field">Ajouter un enseignant</div>
 										<div style="display: flex;">
 											<div class="simple-txt-input-wrapper w-75 mb-0">
@@ -165,16 +165,18 @@
 											</div> 
 											<button class="form-submit-button w-25 btn btn-success" type="submit" name="addttchr" value="confirm">Ajouter</button>
 										</div>
-									</div>
+									</form>
 								</div>
-								<div class="card">
-									<div class="card-body">
-										<div class="form-floating mb-3">
-											<input type="text" class="form-control" id="floatingFltrTTCHR" onkeyup="myFunction()" placeholder="Chercher un enseignant">
-											<label for="floatingFltrTTCHR">Chercher un enseignant</label>
-										</div>
-										<div class="w-100">
-											<div class="card flex-fill table-responsive">
+							</div>
+							<div class="card">
+								<div class="card-body">
+									<div class="form-floating mb-3">
+										<input type="text" class="form-control" id="floatingFltrTTCHR" onkeyup="myFunction()" placeholder="Chercher un enseignant">
+										<label for="floatingFltrTTCHR">Chercher un enseignant</label>
+									</div>
+									<div class="w-100">
+										<div class="card flex-fill table-responsive">
+											<form action="#" method="POST">
 												<table id="LSTTTCHRSFLTR" class="table table-hover my-0">
 													<tr class="header">
 														<th>Nom et prenom</th>
@@ -207,13 +209,13 @@
 														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="Moulay.bento.machi3chir"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
 													</tr>
 												</table>
-											</div>
+											</form>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</form>
+					</div>
 				</div>
 			</main>
 
