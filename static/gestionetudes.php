@@ -36,32 +36,32 @@
 				<ul class="sidebar-nav">
 					<li class="sidebar-header"></li>
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="admindashboard.html"> <!--LINK TO CHANGE-->
+						<a class="sidebar-link" href="admindashboard.php"> <!--LINK TO CHANGE-->
 							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Tableau de Bord</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="gestionenseignants.html">
+						<a class="sidebar-link" href="gestionenseignants.php">
 							<i class="align-middle" data-feather="users"></i> <span class="align-middle">Gestion D&apos;enseignants</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="gestionlocaux.html">
+						<a class="sidebar-link" href="gestionlocaux.php">
 							<i class="align-middle" data-feather="database"></i> <span class="align-middle">Gestion de Locaux</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item active">
-						<a class="sidebar-link" href="gestionetudes.html">
+						<a class="sidebar-link" href="gestionetudes.php">
 							<i class="align-middle" data-feather="book"></i> <span class="align-middle">Gestion D&apos;&eacute;tudes</span>
 						</a>
 					</li>
 
 					<div class="sidebar-sticky-bottom">
 						<li class="sidebar-sticky-profile sidebar-item">
-							<a class="sidebar-profile sidebar-sticky-element sidebar-link" href="adminprofile.html">
+							<a class="sidebar-profile sidebar-sticky-element sidebar-link" href="adminprofile.php">
 								<i class="sidebar-svg-profile align-middle" data-feather="user"></i> <span class="align-middle">Profil</span>
 							</a>
 						</li>

@@ -10,7 +10,10 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link rel="shortcut icon" href="img/icons/icon-48x48.png" />
 
-	<title>Tableau de bord - Enseignant</title>
+	<link rel="canonical" href="https://demo-basic.adminkit.io/pages-blank.html" />
+
+	<title>Gestion D&apos;enseignants</title>
+	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 	<link href="css/app.css" rel="stylesheet">
@@ -33,32 +36,32 @@
 				<ul class="sidebar-nav">
 					<li class="sidebar-header"></li>
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="admindashboard.html"> <!--LINK TO CHANGE-->
+						<a class="sidebar-link" href="admindashboard.php"> <!--LINK TO CHANGE-->
 							<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Tableau de Bord</span>
 						</a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="gestionenseignants.html">
-							<i class="align-middle" data-feather="users"></i> <span class="align-middle">Gestion D'enseignants</span>
+					<li class="sidebar-item active">
+						<a class="sidebar-link" href="gestionenseignants.php">
+							<i class="align-middle" data-feather="users"></i> <span class="align-middle">Gestion D&apos;enseignants</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="gestionlocaux.html">
+						<a class="sidebar-link" href="gestionlocaux.php">
 							<i class="align-middle" data-feather="database"></i> <span class="align-middle">Gestion de Locaux</span>
 						</a>
 					</li>
 
 					<li class="sidebar-item">
-						<a class="sidebar-link" href="gestionetudes.html">
+						<a class="sidebar-link" href="gestionetudes.php">
 							<i class="align-middle" data-feather="book"></i> <span class="align-middle">Gestion D&apos;&eacute;tudes</span>
 						</a>
 					</li>
 
 					<div class="sidebar-sticky-bottom">
 						<li class="sidebar-sticky-profile sidebar-item">
-							<a class="sidebar-profile sidebar-sticky-element sidebar-link" href="adminprofile.html">
+							<a class="sidebar-profile sidebar-sticky-element sidebar-link" href="adminprofile.php">
 								<i class="sidebar-svg-profile align-middle" data-feather="user"></i> <span class="align-middle">Profil</span>
 							</a>
 						</li>
@@ -77,7 +80,7 @@
 				<a class="sidebar-toggle js-sidebar-toggle">
           			<i class="hamburger align-self-center"></i>
         		</a>
-				<div class="navbar-title">Modifier Le Profil</div>
+				<div class="navbar-title">Gestion D&apos;enseignants</div>
 				<div class="navbar-collapse collapse">
 					<ul class="navbar-nav navbar-align">
 						<li class="nav-item dropdown">
@@ -145,55 +148,99 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 					<div class="row">
-						<div class="w-100 d-flex">
-							<div class="w-100">                                            
-                                <div class="row">
-                                    <div class="col-sm-6 cards-profile-admin">
-                                        <div class="card">
-                                            <div class="card-body cards-profile-admin">
-                                                <div style="display: flex; flex-direction: column; align-items: center;">
-                                                    <div class="lbl-txt-field" style="font-size: 1.9em; font-weight: bold; margin-bottom: 20px; text-transform: capitalize;">Changer ma photo</div>
-                                                    <!--PHP PHP PHP-->
-                                                    <img src="img/avatars/avatar.jpg" class="big-profile-pic">
-                                                    <!--PHP PHP PHP-->
-                                                    <form action="#" method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: stretch;">
-                                                        <input type="file" name="pdp" accept="image/png, image/jpg, image/jpeg">
-                                                        <button class="change-pdp-sub-button btn btn-success" type="submit" name="confirmPDPUpload" value="upPDPcnf" >Confirmer</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+						<div class="col-12">
+							<div class="card">
+								<div class="card-body">
+									<form action="#" method="POST"> <!--WIP PHP PHP PHP-->
+										<div class="lbl-txt-field">Ajouter un enseignant</div>
+										<div style="display: flex;">
+											<div class="simple-txt-input-wrapper w-75 mb-0">
+												<input name="id_ens_tadd" type="text" class="simple-txt-input w-100 form-control" pattern="[a-zA-Z0-9._%+-]+" id="addTTCHRID" placeholder="E-mail institutionnel de l&apos;enseignant" required>
+												<div class="txtfield-suffix unselectable">@uit.ac.ma</div>
+											</div> 
+											<button class="form-submit-button w-25 btn btn-success" type="submit" name="addttchr" value="confirm">Ajouter</button>
+										</div>
+									</form>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-body">
+									<div class="form-floating mb-3">
+										<input type="text" class="form-control" id="floatingFltrTTCHR" onkeyup="myFunction()" placeholder="Chercher un enseignant">
+										<label for="floatingFltrTTCHR">Chercher un enseignant</label>
+									</div>
+									<div class="w-100">
+										<div class="card flex-fill table-responsive">
+											<form action="#" method="POST">
+												<table id="LSTTTCHRSFLTR" class="table table-hover my-0">
+													<tr class="header">
+														<th>Nom et prenom</th>
+														<th>Adresse E-mail</th>
+														<th>Charge horaire (h&sol;semaine)</th>
+														<th style="text-align: center;">Retirer</th>
+													</tr>
+													<tr>
+														<td>Benbro L3chir</td>
+														<td>benbro.l3chir&commat;uit.ac.ma</td>
+														<td>76</td>
+														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="benbro.l3chir"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
+													</tr>
+													<tr>
+														<td>Oumaira Thegoat</td>
+														<td>goat.oum&commat;uit.ac.ma</td>
+														<td>31</td>
+														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="goat.oum"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
+													</tr>
+													<tr>
+														<td>Smyya twinabenabdellah</td>
+														<td>Smyya.twinabenabdellah&commat;uit.ac.ma</td>
+														<td>42</td>
+														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="Smyya.twinabenabdellah"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
+													</tr>
+													<tr>
+														<td>Moulay Bento Machi3chir</td>
+														<td>Moulay.bento.machi3chir&commat;uit.ac.ma</td>
+														<td>22</td>
+														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="Moulay.bento.machi3chir"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
+													</tr>
+												</table>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main>
 
-                                    <div class="col-sm-6">
-                                        <div class="card">
-                                            <div class="card-body cards-profile-admin" style="position: relative;">
-                                                <div class="w-75" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">
-                                                    <div class="lbl-txt-field" style="font-size: 1.9em; font-weight: bold; margin-bottom: 20px; text-transform: capitalize;">Changer mon mot de passe</div>
-                                                    <!--PHP PHP PHP-->
-                                                    <form action="#" method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: stretch;">
-                                                        <div class="form-floating mb-3 simple-txt-input-wrapper w-100 mb-0">
-                                                            <input name="oldmdp" type="password" class="simple-txt-input w-100 form-control" pattern="[a-zA-Z0-9._%+-]+" id="oldmdp" placeholder="Encien mot de passe" required>
-                                                            <label for="oldmdp">Encien mot de passe</label>
-                                                        </div> 
-                                                        <div class="form-floating mb-3 simple-txt-input-wrapper w-100 mb-0">
-                                                            <input name="newmdp" type="password" class="simple-txt-input w-100 form-control" pattern="[a-zA-Z0-9._%+-]+" id="newmdp" placeholder="Nouveau mot de passe" required>
-                                                            <label for="newmdp">Nouveau mot de passe</label>
-                                                        </div>
-                                                        <button class="change-pdp-sub-button btn btn-success" type="submit" name="confirmpasswrdchng" value="confirmpasswrdchng" >Mettre &agrave; jour mon mot de passe</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </main>
-        </div>
-    </div>
-    <script src="js/app.js"></script>
+		</div>
+	</div>
+
+	<script src="js/app.js"></script>
+	<script>
+		function myFunction() {
+			// Declare variables
+			var input, filter, table, tr, td, i, txtValue;
+			input = document.getElementById("floatingFltrTTCHR");
+			filter = input.value.toUpperCase();
+			table = document.getElementById("LSTTTCHRSFLTR");
+			tr = table.getElementsByTagName("tr");
+		
+			// Loop through all table rows, and hide those who don't match the search query
+			for (i = 0; i < tr.length; i++) {
+				td = tr[i].getElementsByTagName("td")[0];
+				if (td) {
+					txtValue = td.textContent || td.innerText;
+					if (txtValue.toUpperCase().indexOf(filter) > -1) {
+						tr[i].style.display = "";
+					} else {
+						tr[i].style.display = "none";
+					}
+				}
+			}
+		}
+	</script>
 </body>
+
 </html>
