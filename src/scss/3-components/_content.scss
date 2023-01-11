@@ -14,3 +14,23 @@
     padding: $content-padding-desktop;  
   }
 }
+
+.big-err-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.err-header {
+  font-size: 6em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.err-desc {
+  font-size: 2em;
+  text-align: center;
+}
