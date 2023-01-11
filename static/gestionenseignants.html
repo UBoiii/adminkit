@@ -152,22 +152,30 @@
 
 			<main class="content">
 				<div class="container-fluid p-0">
-					<a href="#" class="add-button btn btn-success"> <!--TO DO PHP PHP PHP-->
-						<span class="add-button-logo">+</span>
-						<span class="add-button-txt">Ajouter un enseignant</span>
-					</a>
-					<div class="row">
-						<div class="col-12">
-							<div class="card">
-								<div class="card-body">
-									<div class="form-floating mb-3">
-										<input type="email" class="form-control" id="floatingFltrTTCHR" onkeyup="myFunction()" placeholder="Chercher">
-										<label for="floatingFltrTTCHR">Chercher</label>
+					<form action="#" method="POST"> <!--WIP PHP PHP PHP-->
+						<div class="row">
+							<div class="col-12">
+								<div class="card">
+									<div class="card-body">
+										<div class="lbl-txt-field">Ajouter un enseignant</div>
+										<div style="display: flex;">
+											<div class="simple-txt-input-wrapper w-75 mb-0">
+												<input type="text" class="simple-txt-input w-100 form-control" pattern="[a-zA-Z0-9._%+-]+" id="addTTCHRID" placeholder="E-mail institutionnel de l&apos;enseignant" required>
+												<div class="txtfield-suffix unselectable">@uit.ac.ma</div>
+											</div> 
+											<button class="form-submit-button w-25 btn btn-success" type="submit" name="addttchr" value="confirm">Ajouter</button>
+										</div>
 									</div>
-									<div class="w-100">
-										<div class="card flex-fill">
-											<table id="LSTTTCHRSFLTR" class="table table-hover my-0">
-												<form action="#" method="POST"> <!--WIP PHP PHP PHP-->
+								</div>
+								<div class="card">
+									<div class="card-body">
+										<div class="form-floating mb-3">
+											<input type="text" class="form-control" id="floatingFltrTTCHR" onkeyup="myFunction()" placeholder="Chercher un enseignant">
+											<label for="floatingFltrTTCHR">Chercher un enseignant</label>
+										</div>
+										<div class="w-100">
+											<div class="card flex-fill table-responsive">
+												<table id="LSTTTCHRSFLTR" class="table table-hover my-0">
 													<tr class="header">
 														<th>Nom et prenom</th>
 														<th>Adresse E-mail</th>
@@ -178,35 +186,34 @@
 														<td>Benbro L3chir</td>
 														<td>benbro.l3chir&commat;uit.ac.ma</td>
 														<td>76</td>
-														<td style="text-align: center;"><button class="ghost-button" type="submit" name="rem" value="benbro.l3chir"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
+														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="benbro.l3chir"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
 													</tr>
 													<tr>
 														<td>Oumaira Thegoat</td>
 														<td>goat.oum&commat;uit.ac.ma</td>
 														<td>31</td>
-														<td style="text-align: center;"><button class="ghost-button" type="submit" name="rem" value="goat.oum"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
+														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="goat.oum"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
 													</tr>
 													<tr>
 														<td>Smyya twinabenabdellah</td>
 														<td>Smyya.twinabenabdellah&commat;uit.ac.ma</td>
 														<td>42</td>
-														<td style="text-align: center;"><button class="ghost-button" type="submit" name="rem" value="Smyya.twinabenabdellah"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
+														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="Smyya.twinabenabdellah"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
 													</tr>
 													<tr>
 														<td>Moulay Bento Machi3chir</td>
 														<td>Moulay.bento.machi3chir&commat;uit.ac.ma</td>
 														<td>22</td>
-														<td style="text-align: center;"><button class="ghost-button" type="submit" name="rem" value="Moulay.bento.machi3chir"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
+														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="Moulay.bento.machi3chir"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
 													</tr>
-												</form>
-											</table>
+												</table>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-
+					</form>
 				</div>
 			</main>
 
