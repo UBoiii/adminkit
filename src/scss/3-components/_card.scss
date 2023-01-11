@@ -132,3 +132,21 @@ input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none; 
   margin: 0; 
 }
+
+.big-profile-pic {
+  border-radius: 4%;
+  width: 230px;
+  height: 230px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.change-pdp-sub-button {
+  font-size: 1.2em;
+  margin-top: 10px;
+  height: 40px;
+}
+
+.cards-profile-admin {
+  height: 430px;
+}
