@@ -1,3 +1,6 @@
+<?php
+	include("connexion.php");
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -22,9 +25,7 @@
 </head>
 
 <body>
-	<?php
-	include("connexion.php");
-	?>
+	
 	<div class="wrapper">
 		<nav id="sidebar" class="sidebar js-sidebar">
 			<div class="sidebar-content js-simplebar">
@@ -151,7 +152,7 @@
 						<div class="col-12">
 							<div class="card">
 								<div class="card-body">
-									<form action="#" method="POST"> <!--WIP PHP PHP PHP-->
+									<form action="" method="POST">
 										<div class="lbl-txt-field">Ajouter un nouveau b&acirc;timent</div>
 										<div style="display: flex;">
 											<div class="simple-txt-input-wrapper w-75 mb-0">
@@ -215,106 +216,90 @@
 												<th>Type</th>
 												<th>Capacit&eacute;</th>
 												<th>Taux d&apos;occupation par semaine</th>
-												<th>Statut actuel</th>
 												<th style="text-align: center;">Retirer</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td colspan="5" class="batrow">
-													<h5 class="batiment-label card-title mb-0">
-														B&acirc;timent A
-													</h5>
-												</td>
-												<td style="text-align: center;"><button class="ghost-button" type="submit" name="rembat" value="A"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment enlever le bâtiment?')"></i></button></td>
-											</tr>
-											<tr>
-												<td>A12</td>
-												<td>Classe</td>
-												<td>80</td>
-												<td>
-													<div class="progress w-50">
-														<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="my-percent-indicator">30%</div>
-												</td>
-												<td><span class="badge bg-danger">Occup&eacute;e</span></td>
-												<td style="text-align: center;"><button class="ghost-button" type="submit" name="remsalle" value="A12"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment enlever la salle?')"></i></button></td>
-											</tr>
-											<tr>
-												<td>A24</td>
-												<td>Salle de TP</td>
-												<td>40</td>
-												<td>
-													<div class="progress w-50">
-														<div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 93%" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="my-percent-indicator">93%</div>
-												</td>
-												<td><span class="badge bg-danger">Occup&eacute;e</span></td>
-												<td style="text-align: center;"><button class="ghost-button" type="submit" name="remsalle" value="A12"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment enlever la salle?')"></i></button></td>
-											</tr>
-											<tr>
-												<td>A17</td>
-												<td>Classe</td>
-												<td>80</td>
-												<td>
-													<div class="progress w-50">
-														<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="my-percent-indicator">45%</div>
-												</td>
-												<td><span class="badge bg-success">Disponible</span></td>
-												<td style="text-align: center;"><button class="ghost-button" type="submit" name="remsalle" value="A12"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment enlever la salle?')"></i></button></td>
-											</tr>
-											<tr>
-												<td colspan="5" class="batrow">
-													<h5 class="batiment-label card-title mb-0">
-														B&acirc;timent D
-													</h5>
-												</td>
-												<td style="text-align: center;"><button class="ghost-button" type="submit" name="rembat" value="A"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment enlever le bâtiment?')"></i></button></td>
-											</tr>
-											<tr>
-												<td>D2</td>
-												<td>Amphith&eacute;&acirc;tre</td>
-												<td>200</td>
-												<td>
-													<div class="progress w-50">
-														<div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="my-percent-indicator">89%</div>
-												</td>
-												<td><span class="badge bg-success">Disponible</span></td>
-												<td style="text-align: center;"><button class="ghost-button" type="submit" name="remsalle" value="A12"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment enlever la salle?')"></i></button></td>
-											</tr>
-											<tr>
-												<td>D3</td>
-												<td>Amphith&eacute;&acirc;tre</td>
-												<td>200</td>
-												<td>
-													<div class="progress w-50">
-														<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="my-percent-indicator">0%</div>
-												</td>
-												<td><span class="badge bg-danger">Occup&eacute;e</span></td>
-												<td style="text-align: center;"><button class="ghost-button" type="submit" name="remsalle" value="A12"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment enlever la salle?')"></i></button></td>
-											</tr>
-											<tr>
-												<td>D4</td>
-												<td>Salle de TP</td>
-												<td>35</td>
-												<td>
-													<div class="progress w-50">
-														<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 1%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-													</div>
-													<div class="my-percent-indicator">1%</div>
-												</td>
-												<td><span class="badge bg-success">Disponible</span></td>
-												<td style="text-align: center;"><button class="ghost-button" type="submit" name="remsalle" value="A12"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment enlever la salle?')"></i></button></td>
-											</tr>
-										</tbody>
+										<?php
+										$fetch1="SELECT * FROM batiment";
+										$resu=mysqli_query($link,$fetch1);
+									while ($dataa = mysqli_fetch_assoc($resu)) {
+
+										$bat = $dataa['id_batiment'];
+										?>
+									<tbody>
+										<tr>
+											<td colspan="5" class="batrow">
+												<h5 class="batiment-label card-title mb-0">
+													<?php
+													echo 'B&acirc;timent ' . $bat;
+													?>
+												</h5>
+											</td>
+										</tr>
+										<?php
+										$samp = "SELECT salle.id_salle as 'id',salle.type_salle as 'type',salle.capacité as 'capacite',salle.id_batiment as 'batiment',
+											SUM(TIME_TO_SEC(TIMEDIFF(se.heure_fin,se.heure_deb)))/ ( 43.75 * 3600) * 100 
+											as 'charge' from salle 
+											LEFT JOIN seance se on se.id_salle=salle.id_salle 
+											where se.date BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY) 
+											AND DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), 
+											INTERVAL 6 DAY) or se.date IS NULL group by salle.id_salle,salle.id_batiment  
+											and salle.id_batiment='$bat'";
+										$result = mysqli_query($link, $samp);
+										while ($data = mysqli_fetch_assoc($result)) {
+											$chrg = 0;
+											if ($data['charge'] != NULL) {
+												$data['charge'] = number_format($data['charge'], 2);
+												$chrg = $data['charge'];
+											}
+											$typsll = "";
+											if ($data['type'] === "salle")
+												$typsll = "Classe";
+											else if ($data['type'] === "Salle Tp")
+												$typsll = "Salle TP";
+											else
+												$typsll = "Amphith&eacute;&acirc;tre";
+											$capacitysll = $data['capacite'];
+											$lblsll = $data['batiment'] . $data['id'];
+											?>
+										<tr>
+											<td>
+												<?php
+												echo $lblsll;
+												?>
+											</td>
+											<td>
+												<?php
+												echo $typsll;
+												?>
+											</td>
+											<td>
+												<?php
+												echo $capacitysll;
+												?>
+											</td>
+											<td>
+												<div class="progress w-50">
+													<?php
+													echo "<div class=\"progress-bar progress-bar-striped\" role=\"progressbar\" style=\"width: " . $chrg . "%\" aria-valuenow=\"" . $chrg . "\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>"
+														?>
+												</div>
+												<div class="my-percent-indicator">
+													<?php
+													echo $chrg . "%";
+													?>
+												</div>
+											</td>
+											<td style="text-align: center;"><button class="ghost-button" type="submit" name="remsalle" 
+											<?php
+											echo "value=\"".$data['batiment'].$data['id']."\""
+											?>
+											><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment enlever la salle?')"></i></button></td>
+										</tr>
+										<?php
+										}
+									}
+										?>
 									</table>
 								</form>
 							</div>
@@ -327,3 +312,13 @@
     <script src="js/app.js"></script>
 </body>
 </html>
+
+<?php
+	if (isset($_POST['addttchr'])) {
+		if (isset($_POST['bat_name_add'])) {
+			$batiment = addslashes($_POST['bat_name_add']);
+			$requete = "INSERT INTO `batiment` (`id_batiment`) VALUES ('$batiment')";
+			$sql = mysqli_query($link,$requete);
+		}
+	}
+?>

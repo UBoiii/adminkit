@@ -1,3 +1,7 @@
+<?php
+	include("connexion.php");
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -162,11 +166,17 @@
 														</div>
 													</div>
 												</div>
-												<!--PHP PHP PHP-->
-												<h1 class="mt-1 mb-3"><span class="cardtxtstat">72</span> enseignants</h1>
+												<h1 class="mt-1 mb-3"><span class="cardtxtstat">
+													<?php
+														$query="SELECT count(*) as 'nbr_enseignants' from enseignant;";
+														$test=mysqli_query($link,$query);
+														$data=mysqli_fetch_assoc($test);
+														echo $data['nbr_enseignants'];
+													?>
+												</span> enseignants</h1>
 												<div class="mb-0">
-													<a href="gestionenseignants.php"> <!--WIP WIP WIP-->
-														<span class="text-muted">Plus de details</span> 
+													<a href="gestionenseignants.php">
+														<span class="text-muted">G&eacute;rer les enseignants</span> 
 													</a>
 												</div>
 											</div>
@@ -175,13 +185,29 @@
 
 										<div id="NHoursTTCHR" class="carousel slide" data-ride="carousel" data-interval="3000">
 											<div class="carousel-inner">
-												<!--PHP PHP PHP-->
+												<?php
+												 $query="SELECT ens.nom as 'nom',ens.prenom as 'prenom',uti.login,SUM(TIME_TO_SEC(TIMEDIFF(se.heure_fin,se.heure_deb))/3600) as 'charge' 
+												 FROM enseignant ens 
+												 left JOIN module modu ON modu.id_enseignant = ens.id_enseignant 
+												 LEFT JOIN utilisateur uti ON ens.id_utilisateur=uti.id
+												 LEFT JOIN seance se ON modu.id_module = se.id_module
+												 AND se.date BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY) AND 
+												 DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), INTERVAL 6 DAY)
+												 GROUP BY ens.nom,ens.prenom;"; 
+												 $result =mysqli_query($link,$query);
+												 ?>
+												 <?php
+												 if ($data=mysqli_fetch_assoc($result)){
+												?>
 												<div class="carousel-item active">
 													<div class="card">
 														<div class="card-body">
 															<div class="row">
 																<div class="col mt-0">
-																	<h5 class="card-title">M. XXXX YYYY enseigne</h5>
+																	<h5 class="card-title">
+																		<?php
+																		echo 'M. <span style="text-transform: capitalize;">' . $data['nom'] . ' ' . $data['prenom'] . '</span> enseigne';
+																		?>
 																</div>
 													
 																<div class="col-auto">
@@ -190,24 +216,39 @@
 																	</div>
 																</div>
 															</div>
-															<h1 class="mt-1 mb-3"><span class="cardtxtstat">63</span> heures par semaine</h1>
+															<h1 class="mt-1 mb-3"><span class="cardtxtstat">
+																<?php
+																	if($data['charge']!=NULL){
+																		$data['charge']=number_format($data['charge'], 2);
+																	echo $data['charge'];
+																	}
+																	else 
+																		echo '0';
+																?>
+															</span> heures par semaine</h1>
 															<div class="mb-0">
-																<a href="gestionenseignants.php"> <!--WIP WIP WIP-->
+																<a href="gestionenseignants.php">
 																	<span class="text-muted">Afficher la liste compl&egrave;te</span>
 																</a>
 															</div>
 														</div>
 													</div>
 											  	</div>
-												<!--END PHP PHP PHP-->
-
-												<!--TO BE REMOVED AFTER ADDING PHP-->
+												<?php
+												 }
+												?>
+												<?php
+													while($data=mysqli_fetch_assoc($result)){
+												?>
 												<div class="carousel-item">
 													<div class="card">
 														<div class="card-body">
 															<div class="row">
 																<div class="col mt-0">
-																	<h5 class="card-title">M. DDDD VVVV enseigne</h5>
+																	<h5 class="card-title">
+																		<?php
+																		echo 'M. ' . $data['nom'] . ' ' . $data['prenom'] . ' enseigne';
+																		?>
 																</div>
 													
 																<div class="col-auto">
@@ -216,44 +257,31 @@
 																	</div>
 																</div>
 															</div>
-															<h1 class="mt-1 mb-3"><span class="cardtxtstat">12</span> heures par semaine</h1>
+															<h1 class="mt-1 mb-3"><span class="cardtxtstat">
+																<?php
+																	if($data['charge']!=NULL){
+																		$data['charge']=number_format($data['charge'], 2);
+																	echo $data['charge'];
+																	}
+																	else 
+																		echo '0';
+																?>
+															</span> heures par semaine</h1>
 															<div class="mb-0">
-																<a href="gestionenseignants.php"> <!--WIP WIP WIP-->
-																	<span class="text-muted">Afficher la liste compl&egrave;te</span>
-																</a>
-															</div>
-														</div>
-													</div>
-											 	</div>
-											  	<div class="carousel-item">
-													<div class="card">
-														<div class="card-body">
-															<div class="row">
-																<div class="col mt-0">
-																	<h5 class="card-title">M. ZZZZ AAAA enseigne</h5>
-																</div>
-													
-																<div class="col-auto">
-																	<div class="stat text-primary">
-																		<i class="align-middle" data-feather="clock"></i>
-																	</div>
-																</div>
-															</div>
-															<h1 class="mt-1 mb-3"><span class="cardtxtstat">22</span> heures par semaine</h1>
-															<div class="mb-0">
-																<a href="gestionenseignants.php"> <!--WIP WIP WIP-->
+																<a href="gestionenseignants.php">
 																	<span class="text-muted">Afficher la liste compl&egrave;te</span>
 																</a>
 															</div>
 														</div>
 													</div>
 											  	</div>
-												<!--END REMOVAL HERE-->
+												<?php
+												}
+												?>
 											</div>
 										</div>
-
-
 									</div>
+
 									<div class="col-sm-6">
 										<div class="card">
 											<div class="card-body">
@@ -268,23 +296,62 @@
 														</div>
 													</div>
 												</div>
-												<!--PHP PHP PHP-->
-												<h1 class="mt-1 mb-3"><span class="cardtxtstat">8792</span> &eacute;tudiants</h1>
+												<h1 class="mt-1 mb-3"><span class="cardtxtstat">
+													<?php
+														$samp="SELECT SUM(effectif) as'SEMFDEM' from groupe where type='cours' ";
+														$DASH=mysqli_query($link,$samp);
+														$data1=mysqli_fetch_assoc($DASH);
+														echo $data1['SEMFDEM'];
+													?>
+												</span> &eacute;tudiants</h1>
 												<div class="mb-0">
-													<span class="text-muted">Plus de details</span>
+													<a href="gestionetudes.php">
+														<span class="text-muted">G&eacute;rer les &eacute;tudes</span>
+													</a>
 												</div>
 											</div>
 										</div>
 										
 										<div id="NHoursFiliere" class="carousel slide" data-ride="carousel" data-interval="3000">
 											<div class="carousel-inner">
-												<!--PHP PHP PHP-->
+												<?php
+												 $query="SELECT filiere.nom_filiere as 'fil',filiere.id_filiere,(filiere.id_semestre + 1) /2 as 'annee',SUM(TIME_TO_SEC(TIMEDIFF(se.heure_fin,se.heure_deb))/3600) as 'charge'
+												 from filiere LEFT JOIN groupe grp on filiere.id_filiere=grp.id_filiere
+												 LEFT JOIN seance se
+												 ON grp.id_groupe = se.id_groupe
+												 WHERE se.Date BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY) AND 
+												 DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), INTERVAL 6 DAY) or se.date is NULL
+												 AND mod(filiere.id_semestre,2) = 1
+												 GROUP BY filiere.nom_filiere,filiere.id_filiere
+												 "; 
+												 $result =mysqli_query($link,$query);
+												 if($data=mysqli_fetch_assoc($result)) {
+													$annee='';
+    											    if($data['fil']!= 'cp1' && $data['fil']!='cp2') {
+    											        $annee=$data['annee']; 
+														$annee-=2;
+    											        $annee=number_format($annee, 0);
+														$annee="CI".$annee;
+														$data['fil'] = 'G.' . ucfirst($data['fil']);
+    												}
+													else
+														$data['fil'] = strtoupper($data['fil']);
+
+													if($data['charge']!=NULL)
+														$data['charge']=number_format($data['charge'], 2);
+													else
+														$data['charge']=0;
+												?>
 												<div class="carousel-item active">
 													<div class="card">
 														<div class="card-body">
 															<div class="row">
 																<div class="col mt-0">
-																	<h5 class="card-title">CI2 G. Info &eacute;tudient</h5>
+																	<h5 class="card-title">
+																		<?php
+																			echo $annee.' '.$data['fil'].' &eacute;tudient'
+																		?>
+																	</h5>
 																</div>
 													
 																<div class="col-auto">
@@ -293,22 +360,61 @@
 																	</div>
 																</div>
 															</div>
-															<h1 class="mt-1 mb-3"><span class="cardtxtstat">63</span> heures par semaine</h1>
+															<h1 class="mt-1 mb-3"><span class="cardtxtstat">
+																<?php
+																	echo $data['charge'];
+																?>
+															</span> heures par semaine</h1>
 															<div class="mb-0">
-																<span class="text-muted">Afficher la liste compl&egrave;te</span>
+																<a href="gestionetudes.php">
+																	<span class="text-muted">G&eacute;rer les &eacute;tudes</span>
+																</a>
 															</div>
 														</div>
 													</div>
 											  	</div>
-												<!--END PHP PHP PHP-->
+												<?php
+												 }
+												?>
 
-												<!--TO BE REMOVED AFTER ADDING PHP-->
+												<?php
+												 $query="SELECT filiere.nom_filiere as 'fil',filiere.id_filiere,(filiere.id_semestre + 1) /2 as 'annee',SUM(TIME_TO_SEC(TIMEDIFF(se.heure_fin,se.heure_deb))/3600) as 'charge'
+												 from filiere LEFT JOIN groupe grp on filiere.id_filiere=grp.id_filiere
+												 LEFT JOIN seance se
+												 ON grp.id_groupe = se.id_groupe
+												 WHERE se.Date BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY) AND 
+												 DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), INTERVAL 6 DAY) or se.date is NULL
+												 AND mod(filiere.id_semestre,2) = 1
+												 GROUP BY filiere.nom_filiere,filiere.id_filiere
+												 "; 
+												 $result =mysqli_query($link,$query);
+												 while($data=mysqli_fetch_assoc($result)) {
+													$annee='';
+    											    if($data['fil']!= 'cp1' && $data['fil']!='cp2') {
+    											        $annee=$data['annee']; 
+														$annee-=2;
+    											        $annee=number_format($annee, 0);
+														$annee="CI".$annee;
+														$data['fil'] = 'G. ' . ucfirst($data['fil']);
+    												}
+													else
+														$data['fil'] = strtoupper($data['fil']);
+
+													if($data['charge']!=NULL)
+														$data['charge']=number_format($data['charge'], 2);
+													else
+														$data['charge']=0;
+												?>
 												<div class="carousel-item">
 													<div class="card">
 														<div class="card-body">
 															<div class="row">
 																<div class="col mt-0">
-																	<h5 class="card-title">CI1 G. Indus &eacute;tudient</h5>
+																	<h5 class="card-title">
+																		<?php
+																			echo $annee.' '.$data['fil'].' &eacute;tudient'
+																		?>
+																	</h5>
 																</div>
 													
 																<div class="col-auto">
@@ -317,35 +423,22 @@
 																	</div>
 																</div>
 															</div>
-															<h1 class="mt-1 mb-3"><span class="cardtxtstat">12</span> heures par semaine</h1>
+															<h1 class="mt-1 mb-3"><span class="cardtxtstat">
+																<?php
+																	echo $data['charge'];
+																?>
+															</span> heures par semaine</h1>
 															<div class="mb-0">
-																<span class="text-muted">Afficher la liste compl&egrave;te</span>
-															</div>
-														</div>
-													</div>
-											 	</div>
-											  	<div class="carousel-item">
-													<div class="card">
-														<div class="card-body">
-															<div class="row">
-																<div class="col mt-0">
-																	<h5 class="card-title">CP2 &eacute;tudient</h5>
-																</div>
-													
-																<div class="col-auto">
-																	<div class="stat text-primary">
-																		<i class="align-middle" data-feather="book-open"></i>
-																	</div>
-																</div>
-															</div>
-															<h1 class="mt-1 mb-3"><span class="cardtxtstat">22</span> heures par semaine</h1>
-															<div class="mb-0">
-																<span class="text-muted">Afficher la liste compl&egrave;te</span>
+																<a href="gestionetudes.php">
+																	<span class="text-muted">G&eacute;rer les &eacute;tudes</span>
+																</a>
 															</div>
 														</div>
 													</div>
 											  	</div>
-												<!--END REMOVAL HERE-->
+												<?php
+												 }
+												?>
 											</div>
 										</div>
 									</div>
@@ -358,103 +451,90 @@
 						<div class="w-100 d-flex">
 							<div class="table-responsive card flex-fill">
 								<table class="bats-table table table-hover my-0">
-									<!--PHP PHP PHP-->
 									<thead>
 										<tr>
 											<th>Num&eacute;ro de Salle</th>
 											<th>Type</th>
 											<th>Capacit&eacute;</th>
 											<th>Taux d&apos;occupation par semaine</th>
-											<th>Statut actuel</th>
 										</tr>
 									</thead>
+									<?php
+										$fetch1="SELECT * FROM batiment";
+										$resu=mysqli_query($link,$fetch1);
+									while ($dataa = mysqli_fetch_assoc($resu)) {
+
+										$bat = $dataa['id_batiment'];
+										?>
 									<tbody>
 										<tr>
-											<td colspan="5" class="batrow">
+											<td colspan="4" class="batrow">
 												<h5 class="batiment-label card-title mb-0">
-													B&acirc;timent A
+													<?php
+													echo 'B&acirc;timent ' . $bat;
+													?>
 												</h5>
 											</td>
 										</tr>
+										<?php
+										$samp = "SELECT salle.id_salle as 'id',salle.type_salle as 'type',salle.capacité as 'capacite',salle.id_batiment as 'batiment',
+											SUM(TIME_TO_SEC(TIMEDIFF(se.heure_fin,se.heure_deb)))/ ( 43.75 * 3600) * 100 
+											as 'charge' from salle 
+											LEFT JOIN seance se on se.id_salle=salle.id_salle 
+											where se.date BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY) 
+											AND DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), 
+											INTERVAL 6 DAY) or se.date IS NULL group by salle.id_salle,salle.id_batiment  
+											and salle.id_batiment='$bat'";
+										$result = mysqli_query($link, $samp);
+										while ($data = mysqli_fetch_assoc($result)) {
+											$chrg = 0;
+											if ($data['charge'] != NULL) {
+												$data['charge'] = number_format($data['charge'], 2);
+												$chrg = $data['charge'];
+											}
+											$typsll = "";
+											if ($data['type'] === "salle")
+												$typsll = "Classe";
+											else if ($data['type'] === "Salle Tp")
+												$typsll = "Salle TP";
+											else
+												$typsll = "Amphith&eacute;&acirc;tre";
+											$capacitysll = $data['capacite'];
+											$lblsll = $data['batiment'] . $data['id'];
+											?>
 										<tr>
-											<td>A12</td>
-											<td>Classe</td>
-											<td>80</td>
+											<td>
+												<?php
+												echo $lblsll;
+												?>
+											</td>
+											<td>
+												<?php
+												echo $typsll;
+												?>
+											</td>
+											<td>
+												<?php
+												echo $capacitysll;
+												?>
+											</td>
 											<td>
 												<div class="progress w-50">
-													<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100"></div>
-											  	</div>
-												<div class="my-percent-indicator">30%</div>
-											</td>
-											<td><span class="badge bg-danger">Occup&eacute;e</span></td>
-										</tr>
-										<tr>
-											<td>A24</td>
-											<td>Salle de TP</td>
-											<td>40</td>
-											<td>
-												<div class="progress w-50">
-													<div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 93%" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100"></div>
-											  	</div>
-												<div class="my-percent-indicator">93%</div>
-											</td>
-											<td><span class="badge bg-danger">Occup&eacute;e</span></td>
-										</tr>
-										<tr>
-											<td>A17</td>
-											<td>Classe</td>
-											<td>80</td>
-											<td>
-												<div class="progress w-50">
-													<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
-											  	</div>
-												<div class="my-percent-indicator">45%</div>
-											</td>
-											<td><span class="badge bg-success">Disponible</span></td>
-										</tr>
-										<tr>
-											<td colspan="5" class="batrow">
-												<h5 class="batiment-label card-title mb-0">
-													B&acirc;timent D
-												</h5>
+													<?php
+													echo "<div class=\"progress-bar progress-bar-striped\" role=\"progressbar\" style=\"width: " . $chrg . "%\" aria-valuenow=\"" . $chrg . "\" aria-valuemin=\"0\" aria-valuemax=\"100\"></div>"
+														?>
+												</div>
+												<div class="my-percent-indicator">
+													<?php
+													echo $chrg . "%";
+													?>
+												</div>
 											</td>
 										</tr>
-										<tr>
-											<td>D2</td>
-											<td>Amphith&eacute;&acirc;tre</td>
-											<td>200</td>
-											<td>
-												<div class="progress w-50">
-													<div class="progress-bar progress-bar-striped bg-danger" role="progressbar" style="width: 89%" aria-valuenow="89" aria-valuemin="0" aria-valuemax="100"></div>
-											  	</div>
-												<div class="my-percent-indicator">89%</div>
-											</td>
-											<td><span class="badge bg-success">Disponible</span></td>
-										</tr>
-										<tr>
-											<td>D3</td>
-											<td>Amphith&eacute;&acirc;tre</td>
-											<td>200</td>
-											<td>
-												<div class="progress w-50">
-													<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
-											  	</div>
-												<div class="my-percent-indicator">0%</div>
-											</td>
-											<td><span class="badge bg-danger">Occup&eacute;e</span></td>
-										</tr>
-										<tr>
-											<td>D4</td>
-											<td>Salle de TP</td>
-											<td>35</td>
-											<td>
-												<div class="progress w-50">
-													<div class="progress-bar progress-bar-striped" role="progressbar" style="width: 1%" aria-valuenow="1" aria-valuemin="0" aria-valuemax="100"></div>
-											  	</div>
-												<div class="my-percent-indicator">1%</div>
-											</td>
-											<td><span class="badge bg-success">Disponible</span></td>
-										</tr>
+										<?php
+										}
+									}
+										?>
 									</tbody>
 								</table>
 							</div>

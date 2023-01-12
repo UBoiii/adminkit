@@ -1,3 +1,7 @@
+<?php
+include("connexion.php");
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -151,7 +155,7 @@
 						<div class="col-12">
 							<div class="card">
 								<div class="card-body">
-									<form action="#" method="POST"> <!--WIP PHP PHP PHP-->
+									<form action="" method="POST">
 										<div class="lbl-txt-field">Ajouter un enseignant</div>
 										<div style="display: flex;">
 											<div class="simple-txt-input-wrapper w-75 mb-0">

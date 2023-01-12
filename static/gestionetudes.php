@@ -1,3 +1,7 @@
+<?php
+    include('connexion.php');
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -152,7 +156,7 @@
 							<div class="card">
 								<div class="card-body">
 									<div class="lbl-txt-field">Ajouter une fili&egrave;re</div>
-									<form action="#" method="POST"> <!--PHP PHP PHP-->
+									<form action="" method="POST">
 										<div style="display: flex;">
 											<div class="simple-txt-input-wrapper w-75 mb-0">
 												<input type="text" class="simple-txt-input w-100 form-control" name="nom_filiere" id="id_filiere" placeholder="Le nom de la fili&egrave;re" required>
@@ -169,7 +173,7 @@
 									<form method="POST" action="#">
 										<div class="input-row-wrapper w-100">
 											<div class="simple-txt-input-wrapper w-50 mb-0" style="display: flex;">
-												<select name="filiere" class="w-100 my-drop-down" id="filiere" onchange="showNextInput()">
+												<select name="filiere" class="w-100 my-drop-down" id="filiere" onchange="showNextInput()" required>
 													<option value="null" selected disabled>Choisir une fili&egrave;re</option>
 													<option value="G.Info">G.Info</option>
 													<option value="G.Indus">G.Indus</option>
@@ -181,7 +185,7 @@
 											<div class="w-50">
 												<div id="next-input" style="display:none; margin-right: 10px">
 													<select id="inputfldyr" name="year" class="w-100 my-drop-down" disabled>
-														<option value="null" selected disabled>Choisir une ann&egrave;e</option>
+														<option value="" selected disabled>Choisir une ann&egrave;e</option>
 														<option value="3">3e année</option>
 														<option value="4">4e année</option>
 														<option value="5">5e année</option>
@@ -197,8 +201,8 @@
 
 										<div class="input-row-wrapper w-100">
 											<div class="simple-txt-input-wrapper w-50 mb-0" style="display: flex;">
-												<select name="type" class="w-100 my-drop-down">
-													<option value="null" selected disabled>Choisir type du cours</option>
+												<select name="scncType" class="w-100 my-drop-down">
+													<option value="" selected disabled>Choisir type du cours</option>
 													<option value="cours">Cours</option>
 													<option value="tp">TP</option>
 													<option value="td">TD</option>
@@ -211,7 +215,7 @@
 												</div>
 											</div>
 										</div>
-										<input class="big-form-submit-button w-100 btn btn-success" type="submit" name="submit" value="Ajouter">
+										<input class="big-form-submit-button w-100 btn btn-success" type="submit" name="AjouterGRP" value="Ajouter">
 									</form>
 								</div>
 							</div>
@@ -250,3 +254,74 @@
 </body>
 
 </html>
+
+<?php
+    //checking if the admin is logged in
+    //if ((!isset($_SESSION['logged_in']) || !$_SESSION['logged_in']) && $_SESSION['type'] = 'admin')
+    //    header("Location: login.php");
+    //checking expire time and updating it
+    //check();
+    if (isset($_POST['sub'])) {
+        for ($i = 5; $i <= 10; $i++) {
+            $query = "INSERT INTO filiere(nom_filiere,id_semestre) VALUES('" . $_POST['nom_filiere'] . "',$i)";
+            mysqli_query($link, $query);
+        }
+    }
+
+	if(isset($_POST['AjouterGRP'])) {
+        $error = $_POST['error'] = "";
+        $effectif = $_POST['effectif'];
+        $array_diff = ['cp1','cp2'];
+
+        if(isset($_POST['filiere']) && $_POST['filiere'] != "" && isset($_POST['scncType']) && $_POST['scncType'] != "") {
+          $filiere = $_POST['filiere'];
+		  $type_seance  = $_POST['scncType'];
+          if (in_array($filiere,$array_diff)) {
+            $section = $_POST['section'];
+            $requete = "SELECT * FROM filiere where nom_filiere ='$filiere'";
+            $sql = mysqli_query($link,$requete);
+            $array_id = array();
+            while($data = mysqli_fetch_assoc($sql)) {
+              $id_filiere = $data['id_filiere'];
+              $id_semestre = $data['id_semestre'];
+              $array_id[$id_filiere] = $id_semestre;
+            }
+            foreach($array_id as $key => $value) {
+              $check = "SELECT * FROM groupe g WHERE g.id_filiere = '$key' and g.id_semestre = '$value' and g.type = '$type_seance'";
+              $sql_check = mysqli_query($link,$check);
+              if (mysqli_num_rows($sql_check) > 0) {  
+                  echo $error;
+              } else {
+                  $insertion = "INSERT INTO `groupe` (`id_groupe`, `id_filiere`, `id_semestre`, `type`, `effectif`, `section`) VALUES (NULL, '$key', '$value', '$type_seance', '$effectif', '$section')";
+                  $sql_exec = mysqli_query($link,$insertion);
+              }
+            }   
+          } 
+          if (!in_array($filiere,$array_diff) && isset($_POST['year']) && $_POST['year'] != "") {
+            $year = $_POST['year'];
+            $semestre = $year*2-1;
+            $semestre2 = $year*2;
+            $requete = "SELECT * FROM filiere where nom_filiere ='$filiere' and (id_semestre = '$semestre' or id_semestre ='$semestre2')";
+            $sql = mysqli_query($link,$requete);
+            $array_id = array();
+            while($data = mysqli_fetch_assoc($sql)) {
+              $id_filiere = $data['id_filiere'];
+              $id_semestre = $data['id_semestre'];
+              $array_id[$id_filiere] = $id_semestre;
+            }
+            foreach($array_id as $key => $value) {
+              $check = "SELECT * FROM groupe g WHERE g.id_filiere = '$key' and g.id_semestre = '$value' and g.type = '$type_seance'";
+              $sql_check = mysqli_query($link,$check);
+              if ($sql_check->num_rows) {  
+                  echo $error;
+              } else {
+                  $insertion = "INSERT INTO `groupe` (`id_groupe`, `id_filiere`, `id_semestre`, `type`, `effectif`, `section`) VALUES (NULL, '$key', '$value', '$type_seance', '$effectif', '')";
+                  $sql_exec = mysqli_query($link,$insertion);
+              }
+            }
+          }
+        }
+    } else {
+        $error = "erreur";
+    }
+?>

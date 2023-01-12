@@ -28,7 +28,7 @@
 				<!--PHP PHP PHP ADD PROFILE HERE-->
 				<div class="sidebar-profile-wrapper sidebar-brand">
 					<img src="img/avatars/avatar.jpg" class="sidebar-profilepic">
-					<span class="sidebar-username align-middle">ADMINISTRATEUR</span>
+					<span class="sidebar-username align-middle">XXX YYY</span>
 				</div>
 				<ul class="sidebar-nav">
 					<li class="sidebar-header"></li>
