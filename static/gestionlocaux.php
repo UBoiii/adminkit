@@ -166,38 +166,42 @@
 
 							<div class="card">
 								<div class="card-body">
-									<form action="#" method="POST"> <!--WIP PHP PHP PHP-->
+									<form action="" method="POST"> <!--WIP PHP PHP PHP-->
 										<div class="lbl-txt-field">Ajouter une nouvelle salle</div>
 										<div class="input-row-wrapper">
 											<div class="simple-txt-input-wrapper w-50 mb-0" style="display: flex;">
-												<select name="batname" id="slctbatname" class="w-100 my-drop-down" required>
+												<select name="batnamef" id="slctbatname" class="w-100 my-drop-down" required>
 													<option value="" disabled selected>Choisir le b&acirc;timent</option>
-													<option value="A">B&acirc;timent A</option>
-													<option value="B">B&acirc;timent B</option>
-													<option value="C">B&acirc;timent C</option>
-													<option value="D">B&acirc;timent D</option>
-													<option value="N">B&acirc;timent N</option>
+													<?php
+													$req1="SELECT * FROM batiment";
+													$query1=mysqli_query($link,$req1);
+													while($dataa=mysqli_fetch_assoc($query1)) {
+													?>
+													<option value="<?php echo $dataa['id_batiment'] ?>">B&acirc;timent <?php echo $dataa['id_batiment'] ?></option>
+													<?php } ?>
 												</select>
 											</div>
 											<div class="form-floating mb-3 w-50">
-												<input type="number" style="margin-left: 5px; height: 55px;" class="simple-txt-input w-100 form-control" id="numSalle" placeholder="Num&eacute;ro de la salle" required>
+												<input name="idclssf" type="number" style="margin-left: 5px; height: 55px;" class="simple-txt-input w-100 form-control" id="numSalle" placeholder="Num&eacute;ro de la salle" required>
 												<label for="numSalle">Num&eacute;ro de la salle</label>
 											</div>
 										</div>
 										<div class="input-row-wrapper">
 											<div class="simple-txt-input-wrapper w-50 mb-0" style="display: flex;">
-												<select name="SalleType" id="slctSalleType" class="w-100 my-drop-down" required>
+												<select name="SalleTypef" id="slctSalleType" class="w-100 my-drop-down" required>
 													<option value="" disabled selected>Choisir le type de la salle</option>
-													<option value="Clss">Classe</option>
-													<option value="Amphi">Amphith&eacute;&acirc;tre</option>
+													<option value="salle">Classe</option>
+													<option value="amphi">Amphith&eacute;&acirc;tre</option>
+													<option value="Salle Tp">Salle de TP</option>
+													<option value="Salle Td">Salle de TD</option>
 												</select>
 											</div>
 											<div class="form-floating mb-3 w-50">
-												<input type="number" style="margin-left: 5px; height: 55px;" class="simple-txt-input w-100 form-control" id="capacitesalle" placeholder="Capacit&eacute; totale de la salle" required>
+												<input name="clsscapf" type="number" style="margin-left: 5px; height: 55px;" class="simple-txt-input w-100 form-control" id="capacitesalle" placeholder="Capacit&eacute; totale de la salle" required>
 												<label for="capacitesalle">Capacit&eacute; totale de la salle</label>
 											</div>
 										</div>
-										<button class="big-form-submit-button w-100 btn btn-success" type="submit" name="addttchr" value="confirm">Ajouter</button>
+										<button class="big-form-submit-button w-100 btn btn-success" type="submit" name="addclss" value="confirm">Ajouter</button>
 									</form>
                                 </div>
                             </div>
@@ -334,4 +338,24 @@
         $querrr=mysqli_query($link,$notif);
         header("Refresh:2");
     }
+
+if (isset($_POST['addclss'])) {
+	$bat = $_POST['batnamef'];
+	$cap = $_POST['clsscapf'];
+	$type = $_POST['SalleTypef'];
+	$id = $_POST['idclssf'];
+	$check = "SELECT * FROM `salle` WHERE salle.id_salle=$id AND salle.id_batiment='$bat' ";
+	$queryy = mysqli_query($link, $check);
+	$resu = mysqli_fetch_assoc($queryy);
+	if (!$resu) {
+		$qeur1 = "INSERT INTO `salle`(`id_salle`, `id_batiment`, `Capacité`, `type_salle`) VALUES ($id,'$bat',$cap,'$type')";
+		$query = mysqli_query($link, $qeur1);
+		$notif = "INSERT INTO `notifs`( `type`, `title`, `description`) VALUES ('ADD','nouvelle salle/amphi','Ajoutation du $type $bat $id de capacite $cap')";
+		$notifs = mysqli_query($link, $notif);
+		echo 'La salle a ete ajoutee';
+	} else {
+		echo 'La salle deja existe';
+	}
+}
+header("Refresh:3");
 ?>
