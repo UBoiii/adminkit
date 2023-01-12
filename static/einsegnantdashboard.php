@@ -27,7 +27,7 @@
 			<div class="sidebar-content js-simplebar">
 				<!--PHP PHP PHP ADD PROFILE HERE-->
 				<div class="sidebar-profile-wrapper sidebar-brand">
-					<img src="img/avatars/avatar.jpg" class="sidebar-profilepic">
+					<img src="photo/avatar.jpg" class="sidebar-profilepic">
 					<span class="sidebar-username align-middle">XXX YYY</span>
 				</div>
 				<ul class="sidebar-nav">

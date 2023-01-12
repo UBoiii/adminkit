@@ -34,7 +34,7 @@
 			<div class="sidebar-content js-simplebar">
 				<!--PHP PHP PHP ADD PROFILE HERE-->
 				<div class="sidebar-profile-wrapper sidebar-brand">
-					<img src="img/avatars/avatar.jpg" class="sidebar-profilepic">
+					<img src="photo/avatar.jpg" class="sidebar-profilepic">
 					<span class="sidebar-username align-middle">ADMINISTRATEUR</span>
 				</div>
 				<ul class="sidebar-nav">
@@ -175,10 +175,16 @@
 											<div class="simple-txt-input-wrapper w-50 mb-0" style="display: flex;">
 												<select name="filiere" class="w-100 my-drop-down" id="filiere" onchange="showNextInput()" required>
 													<option value="null" selected disabled>Choisir une fili&egrave;re</option>
-													<option value="G.Info">G.Info</option>
-													<option value="G.Indus">G.Indus</option>
-													<option value="cp1">CP1</option>
-													<option value="cp2">CP2</option>
+													<?php
+            											$sql = "SELECT DISTINCT nom_filiere FROM filiere";
+            											$result = mysqli_query($link, $sql);
+            											while ($data = mysqli_fetch_assoc($result)) {
+            											    $filiere = $data['nom_filiere'];
+            											    echo "<option value='$filiere'>";
+            											    echo $filiere;
+            											    echo '</option>';
+            											}
+            										?>
 												</select>
 											</div>
 										
@@ -290,7 +296,7 @@
               $check = "SELECT * FROM groupe g WHERE g.id_filiere = '$key' and g.id_semestre = '$value' and g.type = '$type_seance'";
               $sql_check = mysqli_query($link,$check);
               if (mysqli_num_rows($sql_check) > 0) {  
-                  echo $error;
+                  $error = "Déja existe!";
               } else {
                   $insertion = "INSERT INTO `groupe` (`id_groupe`, `id_filiere`, `id_semestre`, `type`, `effectif`, `section`) VALUES (NULL, '$key', '$value', '$type_seance', '$effectif', '$section')";
                   $sql_exec = mysqli_query($link,$insertion);
@@ -298,7 +304,7 @@
             }   
           } 
           if (!in_array($filiere,$array_diff) && isset($_POST['year']) && $_POST['year'] != "") {
-            $year = $_POST['year'];
+			$year = $_POST['year'];
             $semestre = $year*2-1;
             $semestre2 = $year*2;
             $requete = "SELECT * FROM filiere where nom_filiere ='$filiere' and (id_semestre = '$semestre' or id_semestre ='$semestre2')";
@@ -312,8 +318,8 @@
             foreach($array_id as $key => $value) {
               $check = "SELECT * FROM groupe g WHERE g.id_filiere = '$key' and g.id_semestre = '$value' and g.type = '$type_seance'";
               $sql_check = mysqli_query($link,$check);
-              if ($sql_check->num_rows) {  
-                  echo $error;
+              if (mysqli_num_rows($sql_check) > 0) {  
+                  $error = "Déja existe";
               } else {
                   $insertion = "INSERT INTO `groupe` (`id_groupe`, `id_filiere`, `id_semestre`, `type`, `effectif`, `section`) VALUES (NULL, '$key', '$value', '$type_seance', '$effectif', '')";
                   $sql_exec = mysqli_query($link,$insertion);
@@ -321,7 +327,9 @@
             }
           }
         }
+
     } else {
         $error = "erreur";
     }
+	echo $error;
 ?>

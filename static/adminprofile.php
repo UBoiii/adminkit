@@ -1,3 +1,7 @@
+<?php
+include("connexion.php");
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -27,7 +31,7 @@
 			<div class="sidebar-content js-simplebar">
 				<!--PHP PHP PHP ADD PROFILE HERE-->
 				<div class="sidebar-profile-wrapper sidebar-brand">
-					<img src="img/avatars/avatar.jpg" class="sidebar-profilepic">
+					<img src="photo/avatar.jpg" class="sidebar-profilepic">
 					<span class="sidebar-username align-middle">ADMINISTRATEUR</span>
 				</div>
 				<ul class="sidebar-nav">
@@ -154,10 +158,10 @@
                                                 <div style="display: flex; flex-direction: column; align-items: center;">
                                                     <div class="lbl-txt-field" style="font-size: 1.9em; font-weight: bold; margin-bottom: 20px; text-transform: capitalize;">Changer ma photo</div>
                                                     <!--PHP PHP PHP-->
-                                                    <img src="img/avatars/avatar.jpg" class="big-profile-pic">
+                                                    <img src="photo/avatar.jpg" class="big-profile-pic">
                                                     <!--PHP PHP PHP-->
                                                     <form action="#" method="post" enctype="multipart/form-data" style="display: flex; flex-direction: column; align-items: stretch;">
-                                                        <input type="file" name="pdp" accept="image/png, image/jpg, image/jpeg">
+                                                        <input type="file" name="pdp" accept="image/jpg">
                                                         <button class="change-pdp-sub-button btn btn-success" type="submit" name="confirmPDPUpload" value="upPDPcnf" >Confirmer</button>
                                                     </form>
                                                 </div>
@@ -195,5 +199,48 @@
         </div>
     </div>
     <script src="js/app.js"></script>
+
+<?php 
+    if(isset($_POST['confirmpasswrdchng'])) {
+        if(isset($_POST['oldmdp']) and isset($_POST['newmdp'])) {
+            $oldmdp = addslashes($_POST['oldmdp']);
+			echo 'hello, world';
+            $query = "SELECT * FROM `admin`";
+            $sql = mysqli_query($link,$query);
+            
+            $newmdp = addslashes($_POST['newmdp']);
+
+
+				$data = mysqli_fetch_assoc($sql);
+                if (password_verify($oldmdp,$data['password'])){
+                    $hash_pass = password_hash($newmdp,PASSWORD_DEFAULT);
+                    $requete = "UPDATE admin SET password = '$hash_pass' WHERE 1";
+                    $sql = mysqli_query($link,$requete);
+
+            }
+        }
+    }
+    if (isset($_POST['confirmPDPUpload'])) {
+        if(isset($_FILES['pdp']) and $_FILES['pdp']['error']==0){
+		    $dossier= 'photo/';
+		    $temp_name=$_FILES['pdp']['tmp_name'];
+		    if(!is_uploaded_file($temp_name))
+		    {
+		        exit("le photo est untrouvable");
+		    }
+		    if ($_FILES['pdp']['size'] >= 1000000){
+		    	exit("Erreur, le photo est volumineux");
+		    }
+		    $infosphoto = pathinfo($_FILES['pdp']['name']);
+		    $extension_upload = $infosphoto['extension'];
+		    $extension_upload = strtolower($extension_upload);
+		    $nom_photo="avatar.".$extension_upload;
+		    if(!move_uploaded_file($temp_name,$dossier.$nom_photo)){
+		        exit("Problem dans le telechargement de l'image, Ressayez");
+		    }
+        }
+
+    }
+?>
 </body>
 </html>

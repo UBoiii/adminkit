@@ -34,7 +34,7 @@ include("connexion.php");
 			<div class="sidebar-content js-simplebar">
 				<!--PHP PHP PHP ADD PROFILE HERE-->
 				<div class="sidebar-profile-wrapper sidebar-brand">
-					<img src="img/avatars/avatar.jpg" class="sidebar-profilepic">
+					<img src="photo/avatar.jpg" class="sidebar-profilepic">
 					<span class="sidebar-username align-middle">ADMINISTRATEUR</span>
 				</div>
 				<ul class="sidebar-nav">
@@ -183,30 +183,43 @@ include("connexion.php");
 														<th>Charge horaire (h&sol;semaine)</th>
 														<th style="text-align: center;">Retirer</th>
 													</tr>
+													<?php
+													    $query="SELECT uti.id as idutil, ens.nom as 'nom',ens.prenom as 'prenom',uti.login,SUM(TIME_TO_SEC(TIMEDIFF(se.heure_fin,se.heure_deb))/3600) as 'charge' 
+														FROM enseignant ens 
+														left JOIN module modu ON modu.id_enseignant = ens.id_enseignant 
+														LEFT JOIN utilisateur uti ON ens.id_utilisateur=uti.id
+														LEFT JOIN seance se ON modu.id_module = se.id_module
+														AND se.date BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY) AND 
+														DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), INTERVAL 6 DAY)
+														GROUP BY ens.nom,ens.prenom "; 
+														$result =mysqli_query($link,$query);
+														while($data=mysqli_fetch_assoc($result)){
+														if($data['charge']!=NULL)
+															$data['charge']=number_format($data['charge'], 2);
+														else
+															$data['charge'] = 0;
+													?>
 													<tr>
-														<td>Benbro L3chir</td>
-														<td>benbro.l3chir&commat;uit.ac.ma</td>
-														<td>76</td>
-														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="benbro.l3chir"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
+														<td>
+															<?php
+																echo $data['nom'].' '.$data['prenom'];
+															?>
+														</td>
+														<td>
+															<?php
+																echo $data['login'];
+															?>
+														</td>
+														<td>
+															<?php
+																echo $data['charge'];
+															?>
+														</td>
+														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="<?php echo $data['idutil'] ?>"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
 													</tr>
-													<tr>
-														<td>Oumaira Thegoat</td>
-														<td>goat.oum&commat;uit.ac.ma</td>
-														<td>31</td>
-														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="goat.oum"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
-													</tr>
-													<tr>
-														<td>Smyya twinabenabdellah</td>
-														<td>Smyya.twinabenabdellah&commat;uit.ac.ma</td>
-														<td>42</td>
-														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="Smyya.twinabenabdellah"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
-													</tr>
-													<tr>
-														<td>Moulay Bento Machi3chir</td>
-														<td>Moulay.bento.machi3chir&commat;uit.ac.ma</td>
-														<td>22</td>
-														<td style="text-align: center;"><button class="ghost-button" type="submit" name="remttchr" value="Moulay.bento.machi3chir"><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment supprimer l\'enseignant?')"></i></button></td>
-													</tr>
+													<?php
+														}
+													?>
 												</table>
 											</form>
 										</div>
@@ -248,3 +261,22 @@ include("connexion.php");
 </body>
 
 </html>
+
+<?php
+  if(isset($_POST['addttchr'])) {
+    if(isset($_POST['id_ens_tadd'])) {
+      $login = addslashes($_POST['id_ens_tadd']."@uit.ac.ma");
+      $requete = "INSERT INTO `utilisateur` (`id`, `login`, `type`, `photo`) VALUES (NULL, '$login', 'enseignant', '2.png')";
+      $sql_exec = mysqli_query($link,$requete);
+    }
+  }
+
+  if(isset($_POST['remttchr'])) {
+	$id_utilisateur = $_POST['remttchr'];
+	$requete = "DELETE FROM utilisateur WHERE id = '$id_utilisateur'";
+	$sql = mysqli_query($link,$requete);
+	if($sql) {
+		header("Location: gestionenseignants.php");
+	}
+}
+?>

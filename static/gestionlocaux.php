@@ -31,7 +31,7 @@
 			<div class="sidebar-content js-simplebar">
 				<!--PHP PHP PHP ADD PROFILE HERE-->
 				<div class="sidebar-profile-wrapper sidebar-brand">
-					<img src="img/avatars/avatar.jpg" class="sidebar-profilepic">
+					<img src="photo/avatar.jpg" class="sidebar-profilepic">
 					<span class="sidebar-username align-middle">ADMINISTRATEUR</span>
 				</div>
 				<ul class="sidebar-nav">
@@ -238,13 +238,13 @@
 										</tr>
 										<?php
 										$samp = "SELECT salle.id_salle as 'id',salle.type_salle as 'type',salle.capacité as 'capacite',salle.id_batiment as 'batiment',
-											SUM(TIME_TO_SEC(TIMEDIFF(se.heure_fin,se.heure_deb)))/ ( 43.75 * 3600) * 100 
-											as 'charge' from salle 
-											LEFT JOIN seance se on se.id_salle=salle.id_salle 
-											where se.date BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY) 
-											AND DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), 
-											INTERVAL 6 DAY) or se.date IS NULL group by salle.id_salle,salle.id_batiment  
-											and salle.id_batiment='$bat'";
+										SUM(TIME_TO_SEC(TIMEDIFF(se.heure_fin,se.heure_deb)))/ ( 43.75 * 3600) * 100 
+										as 'charge' from salle 
+										LEFT JOIN seance se on se.id_salle=salle.id_salle 
+										where salle.id_batiment='$bat' AND se.date BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY) 
+										AND DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), 
+										INTERVAL 6 DAY) or (se.date IS NULL AND salle.id_batiment='$bat')
+										group by salle.id_salle,salle.id_batiment ";
 										$result = mysqli_query($link, $samp);
 										while ($data = mysqli_fetch_assoc($result)) {
 											$chrg = 0;
@@ -292,7 +292,7 @@
 											</td>
 											<td style="text-align: center;"><button class="ghost-button" type="submit" name="remsalle" 
 											<?php
-											echo "value=\"".$data['batiment'].$data['id']."\""
+											echo "value=\"".$data['id'].' '.$data['batiment']."\""
 											?>
 											><i class="sidebar-svg-profile align-middle" data-feather="x-circle" onclick="return confirm('Voulez vous vraiment enlever la salle?')"></i></button></td>
 										</tr>
@@ -321,4 +321,17 @@
 			$sql = mysqli_query($link,$requete);
 		}
 	}
+
+    if(isset($_POST['remsalle'])){
+        $rem=$_POST['remsalle'];
+        $pieces = explode(" ", $rem);
+        $pie1=$pieces[0];
+        $pie2=$pieces[1];
+        echo $pie1 ; 
+        $quer="DELETE FROM `salle` WHERE salle.id_salle='$pie1' and salle.id_batiment='$pie2'";
+        $result=mysqli_query($link,$quer);
+        $notif="INSERT INTO `notifs`( `type`, `title`, `description`) VALUES ('Remove','Removal of a salle/amphi','Supprimer du  $bat $rem ')";
+        $querrr=mysqli_query($link,$notif);
+        header("Refresh:2");
+    }
 ?>

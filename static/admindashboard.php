@@ -31,7 +31,7 @@
 			<div class="sidebar-content js-simplebar">
 				<!--PHP PHP PHP ADD PROFILE HERE-->
 				<div class="sidebar-profile-wrapper sidebar-brand">
-					<img src="img/avatars/avatar.jpg" class="sidebar-profilepic">
+					<img src="photo/avatar.jpg" class="sidebar-profilepic">
 					<span class="sidebar-username align-middle">ADMINISTRATEUR</span>
 				</div>
 				<ul class="sidebar-nav">
@@ -478,13 +478,13 @@
 										</tr>
 										<?php
 										$samp = "SELECT salle.id_salle as 'id',salle.type_salle as 'type',salle.capacité as 'capacite',salle.id_batiment as 'batiment',
-											SUM(TIME_TO_SEC(TIMEDIFF(se.heure_fin,se.heure_deb)))/ ( 43.75 * 3600) * 100 
-											as 'charge' from salle 
-											LEFT JOIN seance se on se.id_salle=salle.id_salle 
-											where se.date BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY) 
-											AND DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), 
-											INTERVAL 6 DAY) or se.date IS NULL group by salle.id_salle,salle.id_batiment  
-											and salle.id_batiment='$bat'";
+										SUM(TIME_TO_SEC(TIMEDIFF(se.heure_fin,se.heure_deb)))/ ( 43.75 * 3600) * 100 
+										as 'charge' from salle 
+										LEFT JOIN seance se on se.id_salle=salle.id_salle 
+										where salle.id_batiment='$bat' AND se.date BETWEEN DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY) 
+										AND DATE_ADD(DATE_SUB(NOW(), INTERVAL WEEKDAY(NOW()) DAY), 
+										INTERVAL 6 DAY) or (se.date IS NULL AND salle.id_batiment='$bat')
+										group by salle.id_salle,salle.id_batiment ";
 										$result = mysqli_query($link, $samp);
 										while ($data = mysqli_fetch_assoc($result)) {
 											$chrg = 0;
